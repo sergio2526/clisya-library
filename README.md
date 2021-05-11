@@ -1,1 +1,1 @@
-# hour-flag
+# schedule-flag
