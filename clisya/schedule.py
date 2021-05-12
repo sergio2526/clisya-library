@@ -1,3 +1,4 @@
+import clisya
 import pytz
 import datetime
 
@@ -129,8 +130,8 @@ class Schedule:
 if __name__ == '__main__':
 
     # Fecha y hora de entrada
-    schedule = Schedule()
-    schedule.date_to_convert("2021-05-13 15:00:00", country=['colombia','PERU'])
+    clisya = Schedule()
+    clisya.date_to_convert("2021-05-13 15:00:00", country=['colombia','PERU'])
 
 
 
