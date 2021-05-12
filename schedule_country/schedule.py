@@ -1,5 +1,4 @@
 import pytz
-from typing import Optional
 import datetime
 
 LOCAL_TZ = pytz.timezone('America/Bogota')
@@ -36,18 +35,7 @@ class Schedule:
 
     """
 
-    def date_to_convert(self, date_to_convert, lista: list = None):
-
-
-
-        # Los timezones no están derivados de países, sino de ciudades.
-        # Aunque la prioridad es por país
-
-        print(date_to_convert)
-        print("Generando bloque de banderas:")
-        print("")
-
-        # Inicializamos el diccionario
+    def date_to_convert(self, date_to_convert, country: list = None):
 
         date_to_convert = datetime.datetime.strptime(
         date_to_convert, "%Y-%m-%d %H:%M:%S")
@@ -55,7 +43,9 @@ class Schedule:
         times = {"00pm": "X"}
         date_to_convert = LOCAL_TZ.localize(date_to_convert)
 
-        if lista is None:
+        if country is None:
+            print(date_to_convert,"\nGenerating block of flags:\n")
+            
             for country in zones:            
                 dtc = date_to_convert.astimezone(pytz.timezone(country[1]))
                 if country[1] == "Europe/Madrid":
@@ -77,14 +67,17 @@ class Schedule:
             for time, flag in times.items():
                 if flag != 'X':
                     print(time.lower(), flag.strip())
+            
 
-        elif lista != None:
+        elif country != None:
 
             comparacion=[]   
             for pais in zones:
-                if pais[0] in lista:
+                if pais[0] in country:
                     comparacion.append(pais)
             if len(comparacion) > 0:
+                print(date_to_convert,"\nGenerating block of flags:\n")
+
                 for pais in comparacion: 
                     #print(pais)
                     dtc2 = date_to_convert.astimezone(pytz.timezone(pais[1]))
@@ -108,14 +101,14 @@ class Schedule:
                     if flag != 'X':
                         print(time.lower(), flag.strip())
             else:
-                print('No hay nada')
+                return "The country list is empty, enter a name, example, country = ['Colombia', 'Mexico,' Peru ']"
 
 
 if __name__ == '__main__':
 
     # Fecha y hora de entrada
     schedule = Schedule()
-    schedule.date_to_convert("2021-05-11 15:00:00",lista=['🇬🇹','🇨🇴','🇪🇸','🇲🇽','🇺🇸'])
+    schedule.date_to_convert("2021-05-11 15:00:00",country=['🇨🇷','🇻🇪'])
 
 
 
