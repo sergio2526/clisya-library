@@ -1,1 +1,0 @@
-from schedule_country.schedule import Schedule
