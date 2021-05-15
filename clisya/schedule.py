@@ -28,6 +28,8 @@ ZONES = [
     ["🇺🇸", "US/Pacific","Us_Pacific"]
 ]
 
+times = {"00pm": "X"}
+
 class Schedule:
     """
 
@@ -36,55 +38,63 @@ class Schedule:
 
     """
 
-    def date_to_convert(self, date_to_convert, country: list = None):
+
+    def convert(self, date_to_convert, country: list = None):
 
         date_to_convert = datetime.datetime.strptime(
         date_to_convert, "%Y-%m-%d %H:%M:%S")
         
-        times = {"00pm": "X"}
+        
         date_to_convert = LOCAL_TZ.localize(date_to_convert)
+
+        dtc = date_to_convert.astimezone(pytz.timezone(country[1]))
+        if country[1] == "Europe/Madrid":
+                # Imprime la hora en formato de 24 horas y una "H" al final
+            dtc = dtc.strftime("%-HH")
+        else:
+            # Imprime la hora en formato de 12 horas PM/AM
+            dtc = dtc.strftime("%-I%p")
+        try:
+            times[dtc] = times[dtc] + country[0]
+        except KeyError:
+            times[dtc] = country[0]
+        # Si el país es USA en Pacific, agregar el "PT" frente a bandera de US
+        if country[1] == "US/Pacific":
+            times[dtc] = times[dtc] + " PT"
+
+        times[dtc] = times[dtc] + " "
+
+        return times[dtc]
+
+
+    def date_to_convert(self, date_to_convert, country: list = None):
+
 
         if country is None:
 
             """
 
-            Desicion que obtiene todos los horarios de los paises,
-            la lista country=[] es opcional.
+            Decisión que obtiene todos los horarios de los países,
+            sin necesidad de especificar country=[] como parámetro.
 
             """
 
-            print(date_to_convert,"\nGenerating block of flags:\n")
-            
-            for country in ZONES:            
-                dtc = date_to_convert.astimezone(pytz.timezone(country[1]))
-                if country[1] == "Europe/Madrid":
-                    # Imprime la hora en formato de 24 horas y una "H" al final
-                    dtc = dtc.strftime("%-HH")
-                else:
-                    # Imprime la hora en formato de 12 horas PM/AM
-                    dtc = dtc.strftime("%-I%p")
-                try:
-                    times[dtc] = times[dtc] + country[0]
-                except KeyError:
-                    times[dtc] = country[0]
-                # Si el país es USA en Pacific, agregar el "PT" frente a bandera de US
-                if country[1] == "US/Pacific":
-                    times[dtc] = times[dtc] + " PT"
-
-                times[dtc] = times[dtc] + " "
-            
+            print(date_to_convert,"\nGenerating block of flags:\n")            
+            for country in ZONES:
+                #Llamando al metodo convert          
+                self.convert(date_to_convert,country)
+            #Listando resultado hora y bandera correspondiente
             for time, flag in times.items():
                 if flag != 'X':
-                    print(time.lower(), flag.strip())
-            
+                    print(time.lower(), flag.strip())        
 
         elif country != None:
 
             """
-            Decision que compara y recorre la busqueda
-            de los elementos dados por el usuario en el metodo date_to_convert
+            Desición que compara y recorre la búsqueda
+            de los elementos dados por el usuario en la lista country[].
             
-            ejemplo: country['Colombia','Peru','Mexico]
+            ejemplo: country['Colombia','Peru','Mexico].
 
             """
             
@@ -92,7 +102,6 @@ class Schedule:
             list_country = [list_country.title() for list_country in country]            
             #Generando lista de zonas
             list_zones=[]   
-
             #Ciclo que busca los elementos entrantes de la lista y los guarda en list_zones
             for country in ZONES:
                 if country[2] in list_country:
@@ -102,24 +111,9 @@ class Schedule:
             if len(list_zones) > 0:
                 print(date_to_convert,"\nGenerating block of flags:\n")
                 for country in list_zones: 
-                    #print(country)
-                    dtc2 = date_to_convert.astimezone(pytz.timezone(country[1]))
-                    if country[1] == "Europe/Madrid":
-                        # Imprime la hora en formato de 24 horas y una "H" al final
-                        dtc2 = dtc2.strftime("%-HH")
-                    else:
-                        # Imprime la hora en formato de 12 horas PM/AM
-                        dtc2 = dtc2.strftime("%-I%p")
-                    try:
-                        times[dtc2] = times[dtc2] + country[0]
-                    except KeyError:
-                        times[dtc2] = country[0]
-                    # Si el país es USA en Pacific, agregar el "PT" frente a bandera de US
-                    if country[1] == "US/Pacific":
-                        times[dtc2] = times[dtc2] + " PT"
-
-                    times[dtc2] = times[dtc2] + " "
-                
+                    #Llamando al metodo convert.
+                    self.convert(date_to_convert,country)
+                #Listando resultado hora y bandera correspondiente
                 for time, flag in times.items():
                     if flag != 'X':
                         print(time.lower(), flag.strip())
@@ -128,10 +122,9 @@ class Schedule:
 
 
 if __name__ == '__main__':
-
     # Fecha y hora de entrada
     clisya = Schedule()
-    clisya.date_to_convert("2021-05-13 15:00:00", country=['colombia','PERU'])
+    clisya.date_to_convert("2021-05-13 15:00:00")
 
 
 
