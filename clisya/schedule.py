@@ -2,6 +2,7 @@ import clisya
 import pytz
 import datetime
 
+# Esta es la hora local que asume:
 LOCAL_TZ = pytz.timezone('America/Bogota')
 
 # En orden de tamaño de mercado/prioridad
