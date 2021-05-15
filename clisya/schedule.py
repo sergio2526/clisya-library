@@ -29,6 +29,7 @@ ZONES = [
     ["🇺🇸", "US/Pacific","Us_Pacific"]
 ]
 
+# Inicializamos el diccionario
 times = {"00pm": "X"}
 
 class Schedule:
