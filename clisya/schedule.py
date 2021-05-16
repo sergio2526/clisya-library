@@ -2,7 +2,7 @@ import clisya
 import pytz
 import datetime
 
-# Esta es la hora local que asume:
+# Esta es la hora local que asume GMT-5:
 LOCAL_TZ = pytz.timezone('America/Bogota')
 
 # En orden de tamaño de mercado/prioridad
@@ -12,6 +12,7 @@ ZONES = [
     ["🇵🇪", "America/Lima","Peru"],
     ["🇨🇱", "America/Santiago","Chile"],
     ["🇦🇷", "America/Buenos_Aires","Argentina"],
+    ["🇧🇷","America/Sao_Paulo","Brasil"],
     ["🇪🇸", "Europe/Madrid","España"],
     ["🇺🇾", "America/Montevideo","Uruguay"],
     ["🇪🇨", "America/Guayaquil","Ecuador"],
