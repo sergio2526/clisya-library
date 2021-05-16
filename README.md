@@ -1,6 +1,6 @@
 # Clisya
 
-Versión 0.1.2
+Versión 1.1
 
 ---
 
