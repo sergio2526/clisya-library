@@ -1,6 +1,6 @@
 # Clisya
 
-Versión 0.1.1
+Versión 1.0
 
 ---
 
@@ -58,6 +58,7 @@ clisya.date_to_convert("2021-05-12 18:00:00", country=['colombia','peru','Españ
 
 ---
 
-Te invitamos en caso de que encuentres algún bug o tengas feedback de alguna parte de `clisya`.
+Te invitamos en caso de que encuentres algún bug o tengas feedback de alguna parte de [clisya](https://github.com/sergio2526/clisya-library).
+
 
 *Está librería se construyo basada en el repositorio [Horarios](https://github.com/freddier/Horarios) de Freddy Vega.*
